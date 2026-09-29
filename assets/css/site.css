@@ -131,7 +131,7 @@ table { border-collapse: collapse; width: 100%; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); letter-spacing: -.2px; }
 .logo img { height: 34px; width: auto; }
 .logo .ver {
-  font-size: 11px; font-weight: 700; letter-spacing: .4px; color: var(--brand);
+  font-size: 11px; font-weight: 700; letter-spacing: .4px; color: var(--brand-ink);
   background: var(--mint-soft); border: 1px solid var(--mint-line);
   padding: 2px 7px; border-radius: 999px;
 }
@@ -179,7 +179,7 @@ table { border-collapse: collapse; width: 100%; }
   font-size: 13px; font-weight: 600; color: var(--muted);
   box-shadow: var(--sh-1); margin-bottom: 22px;
 }
-.pill b { color: var(--brand); font-weight: 700; }
+.pill b { color: var(--brand-ink); font-weight: 700; }
 .dot-live { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 3px rgba(43, 212, 174, .28); flex: none; }
 
 h1 {
@@ -438,7 +438,7 @@ h2 { font-size: clamp(26px, 3.2vw, 38px); line-height: 1.18; letter-spacing: -.8
 .cmp { min-width: 660px; font-size: 14.5px; }
 .cmp th, .cmp td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
 .cmp thead th { background: var(--paper-2); font-size: 12px; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); font-weight: 800; }
-.cmp thead th:nth-child(2) { color: var(--brand); background: var(--mint-soft); }
+.cmp thead th:nth-child(2) { color: var(--brand-ink); background: var(--mint-soft); }
 .cmp tbody tr:last-child th, .cmp tbody tr:last-child td { border-bottom: 0; }
 .cmp tbody th { font-weight: 600; color: var(--ink); }
 .cmp td.us { color: var(--brand); font-weight: 700; }
