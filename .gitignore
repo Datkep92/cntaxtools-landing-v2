@@ -1,0 +1,4 @@
+# Ignore nothing ? the whole repo is the published site.
+.DS_Store
+Thumbs.db
+*.log

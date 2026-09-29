@@ -1,0 +1,61 @@
+name: Deploy Pages
+
+# Trang này là static thuần: HTML + CSS + vanilla JS, không framework, không build step.
+# Toàn bộ nội dung nằm ở thư mục gốc của repo.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Không chồng nhiều lần push; lần mới hơn thì hủy lần cũ.
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # Chặn deploy nếu có tài nguyên nội bộ bị thiếu (ảnh sẽ mất khi gửi link).
+      - name: Kiểm tra tài nguyên nội bộ
+        shell: bash
+        run: |
+          missing=0
+          for f in $(grep -oE '(src|href)="[^"]+"' index.html | sed -E 's/.*="([^"]+)"/\1/' | grep -v '^https\?:' | grep -v '^#' | sort -u); do
+            if [ ! -e "${f#./}" ]; then
+              echo "Thiếu tài nguyên: $f"
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ] || exit 1
+          for must in assets/img/og-cover.png assets/img/logo.png assets/img/app-icon.png; do
+            test -f "$must" || { echo "Thiếu $must"; exit 1; }
+          done
+          echo "OK: mọi tài nguyên nội bộ đều tồn tại."
+
+      - name: Cấu hình Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
